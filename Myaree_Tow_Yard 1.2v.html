@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MYAREE TOW YARD v1.20.4</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .header {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #22d3ee;
+    }
+
+    .version {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* Main menu */
+
+    .menu-container {
+      width: 100%;
+      max-width: 520px;
+      margin-top: 24px;
+      padding: 20px 24px;
+      border-radius: 12px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    .menu-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .menu-subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 12px;
+    }
+
+    .menu-image {
+      width: 160px;
+      height: auto;
+      margin: 4px auto 10px;
+      display: block;
+      opacity: 0.95;
+    }
+
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .menu-footer {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 14px;
+    }
+
+    /* Buttons */
+
+    .btn {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      cursor: pointer;
+      background: #111827;
+      color: #e5e7eb;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #22c55e;
+      border-color: #16a34a;
+      color: #022c22;
+      font-weight: 600;
+    }
+
+    .btn-danger {
+      background: #b91c1c;
+      border-color: #7f1d1d;
+      color: #fee2e2;
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      background: #1f2937;
+      border-color: #4b5563;
+    }
+
+    .btn-towout {
+      background: #ea580c;
+      border-color: #c2410c;
+      color: #fff7ed;
+      font-weight: 600;
+    }
+
+    .btn-comment {
+      background: #f97316;
+      border-color: #ea580c;
+      color: #fff7ed;
+      font-weight: 600;
+    }
+
+    .btn-move {
+      background: #1d4ed8;
+      border-color: #1e40af;
+      color: #dbeafe;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .toolbar {
+      width: 100%;
+      max-width: 1400px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 4px;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .toolbar input {
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+    }
+
+    .toolbar .btn {
+      padding: 4px 8px;
+    }
+
+    .search-result {
+      font-size: 12px;
+      color: #e5e7eb;
+      margin-top: 4px;
+    }
+
+    .status-filter-btn {
+      font-size: 11px;
+      padding: 3px 6px;
+    }
+
+    .status-filter-active {
+      background: #047857;
+      border-color: #22c55e;
+    }
+
+    /* Yard layout */
+
+    .yard-layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 8px;
+      width: 100%;
+      max-width: 1400px;
+      margin-bottom: 10px;
+    }
+
+    .yard-container {
+      flex: 4;
+      border: 2px solid #4b5563;
+      border-radius: 10px;
+      padding: 16px 18px;
+      background: #020617;
+      box-shadow: 0 0 30px rgba(15,23,42,0.8);
+      min-height: 380px;
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .yard-main {
+      flex: 4;
+    }
+
+    .yard-sidewall {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+
+    .yard-label {
+      text-align: center;
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    /* Colour legend */
+
+    .legend {
+      font-size: 10px;
+      color: #9ca3af;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-box {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .legend-green {
+      background: #065f46;
+    }
+
+    .legend-yellow {
+      background: #92400e;
+    }
+
+    .legend-orange {
+      background: #9a3412;
+    }
+
+    .legend-red {
+      background: #7f1d1d;
+    }
+
+    .yard-section {
+      margin-top: 10px;
+    }
+
+    .yard-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #9ca3af;
+      margin-bottom: 4px;
+      text-align: left;
+    }
+
+    .yard-section-title span {
+      color: #e5e7eb;
+    }
+
+    .rows-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 8px 0 4px;
+      align-items: stretch;
+    }
+
+    .row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .row-front {
+      grid-template-columns: repeat(10, minmax(90px, 1fr));
+    }
+
+    .row-side {
+      grid-template-columns: repeat(1, minmax(90px, 1fr));
+    }
+
+    /* Back & Runway: 6 across */
+    .row-back {
+      grid-template-columns: repeat(6, minmax(110px, 1fr));
+    }
+
+    .row-runway {
+      grid-template-columns: repeat(6, minmax(110px, 1fr));
+    }
+
+    .slot {
+      border-radius: 8px;
+      padding: 6px 4px;
+      min-width: 70px;
+      min-height: 72px;
+      background: #111827;
+      border: 1px solid #374151;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      text-align: center;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.08s ease, opacity 0.08s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .row-back .slot,
+    .row-runway .slot {
+      min-height: 70px;
+      font-size: 10px;
+    }
+
+    .slot:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(15,23,42,0.9);
+      border-color: #e5e7eb;
+    }
+
+    .slot-number {
+      font-weight: 700;
+      margin-bottom: 2px;
+      font-size: 11px;
+      color: #e5e7eb;
+    }
+
+    .slot-vehicle {
+      font-weight: 600;
+      font-size: 11px;
+      margin-bottom: 2px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slot-rego {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slot-age {
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    .slot-empty {
+      color: #6b7280;
+      font-style: italic;
+      font-size: 11px;
+    }
+
+    .slot-flag {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f97373;
+      margin-top: 2px;
+    }
+
+    .slot-status {
+      font-size: 9px;
+      margin-top: 2px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Status tag colours */
+
+    .status-tag-parts {
+      background: #1d4ed8;
+      color: #dbeafe;
+    }
+
+    .status-tag-contact {
+      background: #854d0e;
+      color: #fef3c7;
+    }
+
+    .status-tag-approved {
+      background: #15803d;
+      color: #bbf7d0;
+    }
+
+    .status-tag-waiting {
+      background: #4b5563;
+      color: #e5e7eb;
+    }
+
+    .status-tag-wrecking {
+      background: #7f1d1d;
+      color: #fee2e2;
+    }
+
+    .status-tag-finished {
+      background: #16a34a;
+      color: #dcfce7;
+    }
+
+    .slot-highlight {
+      outline: 2px solid #fbbf24;
+      box-shadow: 0 0 0 2px #f59e0b, 0 0 20px rgba(251,191,36,0.4);
+    }
+
+    .slot-dim {
+      opacity: 0.25;
+    }
+
+    /* extra flashing outline for super overdue (90+ days) */
+    @keyframes flash-red {
+      0% {
+        box-shadow: 0 0 0 0 rgba(248,113,113,0.6);
+        border-color: #fecaca;
+      }
+      100% {
+        box-shadow: 0 0 14px 3px rgba(248,113,113,0.9);
+        border-color: #f97373;
+      }
+    }
+
+    .slot-overdue-hard {
+      animation: flash-red 1.2s ease-in-out infinite alternate;
+    }
+
+    .footer-label {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 8px;
+    }
+
+    /* Age colours */
+
+    .age-new {
+      background: #111827;
+      color: #e5e7eb;
+    }
+
+    .age-green {
+      background: #065f46;
+      color: #d1fae5;
+    }
+
+    .age-yellow {
+      background: #92400e;
+      color: #ffedd5;
+    }
+
+    .age-orange {
+      background: #9a3412;
+      color: #ffedd5;
+    }
+
+    .age-red {
+      background: #7f1d1d;
+      color: #fee2e2;
+    }
+
+    /* Personal vehicle */
+
+    .age-personal {
+      background: #1d4ed8;
+      color: #dbeafe;
+    }
+
+    /* Notifications panel */
+
+    .notifications-container {
+      flex: 1.3;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      padding: 10px 12px;
+      box-shadow: 0 0 20px rgba(15,23,42,0.7);
+      max-height: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .notifications-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .notifications-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 11px;
+      color: #9ca3af;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .notifications-list li {
+      margin-bottom: 3px;
+      border-bottom: 1px dashed #1f2937;
+      padding-bottom: 2px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .notifications-empty {
+      font-size: 11px;
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    /* Available bays panel */
+
+    .available-panel {
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #030712;
+      padding: 6px 8px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .available-panel-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #22c55e;
+      margin-bottom: 2px;
+    }
+
+    .available-count {
+      font-size: 18px;
+      font-weight: 700;
+      color: #22c55e;
+      margin-right: 4px;
+    }
+
+    .available-panel small {
+      color: #6b7280;
+    }
+
+    /* Workshop panel */
+
+    .workshop-panel {
+      border-radius: 8px;
+      border: 1px solid #1d4ed8;
+      background: #020617;
+      padding: 6px 8px;
+      font-size: 11px;
+      color: #bfdbfe;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .workshop-panel:hover {
+      border-color: #60a5fa;
+      box-shadow: 0 0 10px rgba(37,99,235,0.6);
+    }
+
+    .workshop-panel-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 2px;
+    }
+
+    /* Overdue / Workshop screens */
+
+    .overdue-container {
+      width: 100%;
+      max-width: 1400px;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      padding: 8px 12px;
+      box-shadow: 0 0 20px rgba(15,23,42,0.6);
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    .overdue-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #f97316;
+    }
+
+    .overdue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .overdue-item {
+      white-space: nowrap;
+    }
+
+    .overdue-highlight {
+      color: #fb923c;
+      font-weight: 600;
+    }
+
+    /* Yard message bar */
+
+    .yard-message-bar {
+      width: 100%;
+      max-width: 1400px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #f97316;
+      background: #451a03;
+      padding: 8px 12px;
+      box-shadow: 0 0 20px rgba(248,153,29,0.6);
+      font-size: 12px;
+      color: #ffedd5;
+    }
+
+    .yard-message-title {
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: #fed7aa;
+    }
+
+    /* Modal */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .modal {
+      background: #020617;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      padding: 16px 20px;
+      width: 380px;
+      max-width: 95vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .modal-field {
+      margin-bottom: 8px;
+    }
+
+    .modal-label {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .modal-input,
+    .modal-textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+
+    .modal-textarea {
+      resize: vertical;
+      min-height: 60px;
+      max-height: 150px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <div class="title">MYAREE TOW YARD</div>
+      <div class="last-updated" id="lastUpdated">Last updated: --/--/---- --:--</div>
+    </div>
+    <div class="version">Version v1.20.4 · Made by Cameron Hewitt</div>
+  </div>
+
+  <!-- MAIN MENU SCREEN -->
+  <div id="mainMenu" class="menu-container">
+    <div class="menu-title">Main Menu</div>
+    <div class="menu-subtitle">
+      Choose an option to get started.
+    </div>
+
+    <img src="tow_truck.png" alt="Tow truck" class="menu-image"
+         onerror="this.style.display='none';">
+
+    <div class="menu-buttons">
+      <button class="btn btn-primary" onclick="showYard()">1) View Yard</button>
+      <button class="btn btn-primary" onclick="menuSearchVehicle()">2) Search Vehicle</button>
+      <button class="btn btn-primary" onclick="refreshYardFromMenu()">3) Update Yard</button>
+      <button class="btn btn-primary" onclick="showNotificationsPopup()">4) Notifications</button>
+      <button class="btn btn-comment" onclick="menuSetGlobalNote()">Comment / Yard Message</button>
+      <button class="btn btn-danger" onclick="quitApp()">Quit</button>
+    </div>
+
+    <div class="menu-footer">
+      Data is saved only in this browser on this PC (localStorage).<br>
+      Close and reopen this file to keep your yard as-is.
+    </div>
+  </div>
+
+  <!-- SEARCH SCREEN (Menu option 2) -->
+  <div id="searchScreen" class="menu-container" style="display:none;">
+    <div class="menu-title">Search Vehicle</div>
+    <div class="menu-subtitle">
+      Type in a rego to find the vehicle and bay, then jump to the yard.
+    </div>
+
+    <input
+      type="text"
+      id="searchScreenInput"
+      placeholder="Enter rego..."
+      style="width:100%;margin-bottom:8px;padding:6px 8px;border-radius:6px;border:1px solid #4b5563;background:#020617;color:#e5e7eb;font-size:13px;"
+    />
+
+    <div class="menu-buttons">
+      <button class="btn btn-primary" onclick="searchScreenDoSearch()">Search</button>
+      <button class="btn btn-secondary" onclick="searchScreenBack()">Back to Menu</button>
+    </div>
+
+    <div id="searchScreenResult"
+         class="menu-subtitle"
+         style="margin-top:10px;text-align:left;white-space:pre-line;"></div>
+
+    <div class="menu-buttons" style="margin-top:8px;">
+      <button id="searchScreenYardBtn"
+              class="btn btn-primary"
+              style="display:none;"
+              onclick="searchScreenGoToYard()">Yard View</button>
+    </div>
+  </div>
+
+  <!-- APP MAIN (YARD SCREEN) -->
+  <div id="appMain" style="display:none; width:100%; max-width:1400px;">
+
+    <div class="toolbar">
+      <button class="btn" onclick="showMenu()">⟵ Menu</button>
+
+      <button class="btn btn-danger" onclick="showOverdueScreen()">Overdue / Urgent</button>
+
+      <span>Search rego:</span>
+      <input type="text" id="searchInput" placeholder="Enter rego..." />
+      <button class="btn" onclick="searchRego()">Search</button>
+      <button class="btn" onclick="clearSearch()">Clear</button>
+      <div id="searchResult" class="search-result"></div>
+
+      <span style="margin-left:8px;">Status:</span>
+      <button class="btn btn-secondary status-filter-btn status-filter-active"
+              data-status="all" onclick="setStatusFilter('all')">All</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="parts" onclick="setStatusFilter('parts')">Parts</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="contact_member" onclick="setStatusFilter('contact_member')">Contact</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="approved" onclick="setStatusFilter('approved')">Approved</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="waiting_back" onclick="setStatusFilter('waiting_back')">Waiting reply</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="wrecking" onclick="setStatusFilter('wrecking')">Wrecking</button>
+      <button class="btn btn-secondary status-filter-btn"
+              data-status="finished" onclick="setStatusFilter('finished')">Finished</button>
+    </div>
+
+    <!-- Yard message bar (global notice) -->
+    <div id="yardMessageBar" class="yard-message-bar" style="display:none;">
+      <div class="yard-message-title">YARD MESSAGE</div>
+      <div id="yardMessageText"></div>
+    </div>
+
+    <!-- Yard content (yard + notifications) -->
+    <div id="yardContent">
+      <div class="yard-layout">
+        <div class="yard-container">
+          <div class="yard-main">
+            <div class="yard-label">TOW YARD AREA (BAYS 1–61)</div>
+
+            <div class="legend">
+              <span class="legend-item">
+                <span class="legend-box legend-green"></span>0–10d 🟢
+              </span>
+              <span class="legend-item">
+                <span class="legend-box legend-yellow"></span>11–30d !
+              </span>
+              <span class="legend-item">
+                <span class="legend-box legend-orange"></span>31–60d !!
+              </span>
+              <span class="legend-item">
+                <span class="legend-box legend-red"></span>61+d !!!
+              </span>
+            </div>
+
+            <!-- Back Area on top -->
+            <div class="yard-section">
+              <div class="yard-section-title">
+                <span>Back Area</span> (Bays 26–43)
+              </div>
+              <div class="rows-wrapper">
+                <div class="row row-back" id="rowBack"></div>
+              </div>
+            </div>
+
+            <!-- Front & Rear Bays in the middle -->
+            <div class="yard-section">
+              <div class="yard-section-title">
+                <span>Front & Rear Bays</span> (Bays 01–20)
+              </div>
+              <div class="rows-wrapper">
+                <div class="row row-front" id="rowFront1"></div>
+                <div class="row row-front" id="rowFront2"></div>
+              </div>
+            </div>
+
+            <!-- Runway at the bottom -->
+            <div class="yard-section">
+              <div class="yard-section-title">
+                <span>Runway</span> (Bays 44–61)
+              </div>
+              <div class="rows-wrapper">
+                <div class="row row-runway" id="rowRunway"></div>
+              </div>
+            </div>
+
+            <div class="footer-label">GATE / ENTRANCE</div>
+          </div>
+
+          <!-- Side wall column on the right -->
+          <div class="yard-sidewall">
+            <div class="yard-section-title">
+              <span>Side Wall</span> (Bays 21–25)
+            </div>
+            <div class="row row-side" id="rowSide"></div>
+          </div>
+        </div>
+
+        <!-- Recent Events / Available bays / Workshop -->
+        <div class="notifications-container">
+          <div class="notifications-title">Recent Events</div>
+          <ul id="notificationsList" class="notifications-list"></ul>
+
+          <div id="availablePanel" class="available-panel">
+            <div class="available-panel-title">Available Tow Bays</div>
+            <div id="availableText"></div>
+            <small id="availableSmall"></small>
+          </div>
+
+          <div class="workshop-panel" onclick="showWorkshopScreen()">
+            <div class="workshop-panel-title">Workshop / Front</div>
+            <div id="workshopText"></div>
+            <small>Click to view moved vehicles</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overdue / Urgent screen -->
+    <div id="overdueScreen" class="overdue-container" style="display:none;">
+      <div class="overdue-title">Overdue / Urgent Bays (&gt; 60 days)</div>
+      <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;">
+        Listed from longest stay to shortest. Click a bay to jump to it in the yard.
+      </div>
+      <div id="overdueListScreen" class="overdue-list"></div>
+
+      <div style="margin-top:8px;">
+        <button class="btn" onclick="backToYardFromOverdue()">Back to Yard View</button>
+      </div>
+    </div>
+
+    <!-- Workshop screen -->
+    <div id="workshopScreen" class="overdue-container" style="display:none;">
+      <div class="overdue-title">Workshop / Front Vehicles</div>
+      <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;">
+        Vehicles moved off the yard (e.g. into workshop or front). Use "Move back to yard" to allocate a bay.
+      </div>
+      <div id="workshopList" class="overdue-list"></div>
+
+      <div style="margin-top:8px;">
+        <button class="btn" onclick="backToYardFromWorkshop()">Back to Yard View</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for editing a bay -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-title" id="modalTitle">Bay</div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="vehicleInput">Vehicle (make / model)</label>
+        <input class="modal-input" id="vehicleInput" type="text"
+               placeholder="e.g. Toyota Hilux SR5" />
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="regoInput">Rego</label>
+        <input class="modal-input" id="regoInput" type="text"
+               placeholder="e.g. 1ABC123" />
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="roInput">RO Number</label>
+        <input class="modal-input" id="roInput" type="text"
+               placeholder="e.g. 123456" />
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="phoneInput">Customer Phone</label>
+        <input class="modal-input" id="phoneInput" type="text"
+               placeholder="e.g. 04xx xxx xxx" />
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="faultInput">Notes / Fault (more detail)</label>
+        <textarea class="modal-textarea" id="faultInput"
+          placeholder="e.g. No start, towed from Leach Hwy, crank no start, suspect crank sensor."></textarea>
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="waitingInput">Waiting on (e.g. approval, parts)</label>
+        <input class="modal-input" id="waitingInput" type="text"
+               placeholder="e.g. Waiting for approval or tow out" />
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="statusInput">Status</label>
+        <select class="modal-input" id="statusInput">
+          <option value="">(none)</option>
+          <option value="parts">Parts</option>
+          <option value="contact_member">Contact Member</option>
+          <option value="approved">Approved</option>
+          <option value="waiting_back">Waiting to hear back</option>
+          <option value="wrecking">Wrecking</option>
+          <option value="finished">Finished</option>
+        </select>
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="dateInput">Date in (DD/MM/YYYY)</label>
+        <input class="modal-input" id="dateInput" type="text" />
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn btn-towout" onclick="towOutSlot()">Tow Out</button>
+        <button class="btn btn-move" onclick="moveToWorkshop()">Move</button>
+        <button class="btn btn-danger" onclick="clearSlot()">Clear</button>
+        <button class="btn" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveSlot()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ======= DATA & STORAGE =======
+
+    const NUM_SLOTS = 61;
+    const STORAGE_KEY = "myaree_tow_yard_v1";
+
+    let yardData = {
+      lastUpdated: null,
+      slots: {},
+      notifications: [],
+      globalMessage: "",
+      workshop: []
+    };
+
+    let currentSlot = null;
+    let lastSearchSlot = null;
+    let currentStatusFilter = "all";
+
+    function todayDDMMYYYY() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function nowStr() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      const hh = String(d.getHours()).padStart(2, "0");
+      const min = String(d.getMinutes()).padStart(2, "0");
+      return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try {
+          yardData = JSON.parse(raw);
+        } catch (e) {
+          console.error("Error parsing yard data", e);
+        }
+      }
+
+      if (!yardData.slots) yardData.slots = {};
+      if (!yardData.notifications) yardData.notifications = [];
+      if (!yardData.lastUpdated) yardData.lastUpdated = nowStr();
+      if (yardData.globalMessage === undefined || yardData.globalMessage === null) {
+        yardData.globalMessage = "";
+      }
+      if (!yardData.workshop) yardData.workshop = [];
+    }
+
+    function saveData() {
+      yardData.lastUpdated = nowStr();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(yardData));
+      document.getElementById("lastUpdated").textContent =
+        "Last updated: " + yardData.lastUpdated;
+    }
+
+    function addNotification(message) {
+      if (!yardData.notifications) yardData.notifications = [];
+      const timestamp = nowStr();
+      yardData.notifications.unshift(`${timestamp} - ${message}`);
+      if (yardData.notifications.length > 50) {
+        yardData.notifications.pop();
+      }
+    }
+
+    // ======= AGE CALCULATION =======
+
+    function parseDateDDMMYYYY(str) {
+      const [dd, mm, yyyy] = (str || "").split("/");
+      if (!dd || !mm || !yyyy) return null;
+      const d = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+      if (isNaN(d.getTime())) return null;
+      return d;
+    }
+
+    function ageInDays(dateStr) {
+      if (dateStr === "11/11/1111") return null; // personal vehicle, handled separately
+      const d = parseDateDDMMYYYY(dateStr);
+      if (!d) return null;
+      const today = new Date();
+      const diffMs = today - d;
+      return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    }
+
+    function ageLabel(days) {
+      if (days === null) return "NO DATE";
+
+      if (days <= 10) return `${days}d 🟢`;   // green
+      if (days <= 30) return `${days}d !`;    // yellow
+      if (days <= 60) return `${days}d !!`;   // orange
+      return `${days}d`;                      // red (!!! shown separately)
+    }
+
+    function ageClass(days) {
+      if (days === null) return "age-new";
+      if (days <= 10) return "age-green";
+      if (days <= 30) return "age-yellow";
+      if (days <= 60) return "age-orange";
+      return "age-red";
+    }
+
+    // ======= STATUS HELPERS =======
+
+    function statusLabel(value) {
+      switch (value) {
+        case "parts": return "Parts";
+        case "contact_member": return "Contact Member";
+        case "approved": return "Approved";
+        case "waiting_back": return "Waiting reply";
+        case "wrecking": return "Wrecking";
+        case "finished": return "Finished";
+        default: return "";
+      }
+    }
+
+    function statusTagClass(value) {
+      switch (value) {
+        case "parts": return "status-tag-parts";
+        case "contact_member": return "status-tag-contact";
+        case "approved": return "status-tag-approved";
+        case "waiting_back": return "status-tag-waiting";
+        case "wrecking": return "status-tag-wrecking";
+        case "finished": return "status-tag-finished";
+        default: return "";
+      }
+    }
+
+    // ======= RENDERING =======
+
+    function createSlotElement(slotNumber) {
+      const div = document.createElement("div");
+      div.className = "slot";
+      div.dataset.slot = slotNumber;
+      div.addEventListener("click", () => openModal(slotNumber));
+
+      const num = document.createElement("div");
+      num.className = "slot-number";
+      num.textContent = `Bay ${String(slotNumber).padStart(2, "0")}`;
+
+      const vehicleDiv = document.createElement("div");
+      vehicleDiv.className = "slot-vehicle";
+
+      const regoDiv = document.createElement("div");
+      regoDiv.className = "slot-rego";
+
+      const ageDiv = document.createElement("div");
+      ageDiv.className = "slot-age";
+
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "slot-empty";
+      emptyDiv.textContent = "[EMPTY]";
+
+      const flagDiv = document.createElement("div");
+      flagDiv.className = "slot-flag";
+
+      const statusDiv = document.createElement("div");
+      statusDiv.className = "slot-status";
+
+      div.appendChild(num);
+      div.appendChild(vehicleDiv);
+      div.appendChild(regoDiv);
+      div.appendChild(ageDiv);
+      div.appendChild(emptyDiv);
+      div.appendChild(flagDiv);
+      div.appendChild(statusDiv);
+
+      return div;
+    }
+
+    function renderSlots() {
+      const rowFront1   = document.getElementById("rowFront1");
+      const rowFront2   = document.getElementById("rowFront2");
+      const rowSide     = document.getElementById("rowSide");
+      const rowBack     = document.getElementById("rowBack");
+      const rowRunway   = document.getElementById("rowRunway");
+
+      rowFront1.innerHTML  = "";
+      rowFront2.innerHTML  = "";
+      rowSide.innerHTML    = "";
+      rowBack.innerHTML    = "";
+      rowRunway.innerHTML  = "";
+
+      for (let i = 1; i <= 10; i++) {
+        rowFront1.appendChild(createSlotElement(i));
+      }
+
+      for (let i = 11; i <= 20; i++) {
+        rowFront2.appendChild(createSlotElement(i));
+      }
+
+      for (let i = 21; i <= 25; i++) {
+        rowSide.appendChild(createSlotElement(i));
+      }
+
+      for (let i = 26; i <= 43; i++) {
+        rowBack.appendChild(createSlotElement(i));
+      }
+
+      for (let i = 44; i <= 61; i++) {
+        rowRunway.appendChild(createSlotElement(i));
+      }
+
+      updateAllSlots();
+    }
+
+    function updateAllSlots() {
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        updateSlotDisplay(i);
+      }
+      document.getElementById("lastUpdated").textContent =
+        "Last updated: " + (yardData.lastUpdated || "--/--/---- --:--");
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      updateYardMessageUI();
+      renderOverdueScreen();
+      renderWorkshopScreen();
+    }
+
+    function updateSlotDisplay(slotNumber) {
+      const slotElement = document.querySelector(`.slot[data-slot='${slotNumber}']`);
+      if (!slotElement) return;
+
+      const vehicleDiv = slotElement.querySelector(".slot-vehicle");
+      const regoDiv = slotElement.querySelector(".slot-rego");
+      const ageDiv = slotElement.querySelector(".slot-age");
+      const emptyDiv = slotElement.querySelector(".slot-empty");
+      const flagDiv = slotElement.querySelector(".slot-flag");
+      const statusDiv = slotElement.querySelector(".slot-status");
+
+      slotElement.classList.remove(
+        "age-new", "age-green", "age-yellow", "age-orange", "age-red", "age-personal", "slot-overdue-hard"
+      );
+
+      const car = yardData.slots[String(slotNumber)];
+      if (!car) {
+        vehicleDiv.textContent = "";
+        regoDiv.textContent = "";
+        ageDiv.textContent = "";
+        emptyDiv.style.display = "block";
+        flagDiv.textContent = "";
+        statusDiv.textContent = "";
+        statusDiv.className = "slot-status";
+        slotElement.classList.add("age-new");
+        slotElement.title = `Bay ${slotNumber} – empty`;
+        return;
+      }
+
+      const rego = car.rego || "";
+      const vehicle = car.make_model || "";
+      const fault = car.fault || "";
+      const waiting = car.waiting_on || "";
+      const dateIn = car.date_in || "";
+      const ro = car.ro_number || "";
+      const phone = car.customer_phone || "";
+      const status = car.status || "";
+
+      const isPersonal = dateIn === "11/11/1111";
+
+      emptyDiv.style.display = "none";
+      vehicleDiv.textContent = vehicle || "(no description)";
+      regoDiv.textContent = rego ? `Rego: ${rego}` : "";
+
+      flagDiv.textContent = "";
+      statusDiv.textContent = "";
+      statusDiv.className = "slot-status";
+
+      let tooltip = `Bay ${slotNumber}`;
+      if (vehicle) tooltip += `\nVehicle: ${vehicle}`;
+      if (rego) tooltip += `\nRego: ${rego}`;
+      if (ro) tooltip += `\nRO: ${ro}`;
+      if (phone) tooltip += `\nCustomer ph: ${phone}`;
+      if (fault) tooltip += `\nNotes: ${fault}`;
+      if (waiting) tooltip += `\nWaiting on: ${waiting}`;
+
+      if (status) {
+        statusDiv.textContent = statusLabel(status);
+        const tagCls = statusTagClass(status);
+        if (tagCls) statusDiv.classList.add(tagCls);
+        tooltip += `\nStatus: ${statusLabel(status)}`;
+      }
+
+      if (isPersonal) {
+        ageDiv.textContent = "PERSONAL VEHICLE";
+        slotElement.classList.add("age-personal");
+        tooltip += `\nPersonal vehicle`;
+      } else {
+        const days = ageInDays(dateIn);
+        const lbl = ageLabel(days);
+        const cls = ageClass(days);
+        ageDiv.textContent = lbl;
+        slotElement.classList.add(cls);
+
+        if (days !== null && days > 60) {
+          flagDiv.textContent = "!!!";
+        }
+
+        if (days !== null && days > 90) {
+          slotElement.classList.add("slot-overdue-hard");
+        }
+
+        if (dateIn) {
+          tooltip += `\nDate in: ${dateIn} (${lbl})`;
+        }
+      }
+
+      slotElement.title = tooltip;
+    }
+
+    function renderNotifications() {
+      const list = document.getElementById("notificationsList");
+      list.innerHTML = "";
+
+      const events = yardData.notifications || [];
+      if (events.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "No recent events yet.";
+        li.className = "notifications-empty";
+        list.appendChild(li);
+        return;
+      }
+
+      const maxShow = 12;
+      events.slice(0, maxShow).forEach(ev => {
+        const li = document.createElement("li");
+        li.textContent = ev;
+        list.appendChild(li);
+      });
+    }
+
+    function renderAvailable() {
+      const text = document.getElementById("availableText");
+      const small = document.getElementById("availableSmall");
+
+      let free = 0;
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        if (!yardData.slots[String(i)]) free++;
+      }
+
+      text.innerHTML = `<span class="available-count">${free}</span>bay${free === 1 ? "" : "s"} available.`;
+      small.textContent = `Total bays: ${NUM_SLOTS}`;
+    }
+
+    function renderWorkshopSummary() {
+      const txt = document.getElementById("workshopText");
+      if (!txt) return;
+      const ws = yardData.workshop || [];
+      const n = ws.length;
+      if (n === 0) {
+        txt.textContent = "No vehicles currently moved.";
+      } else {
+        txt.textContent = `${n} vehicle${n === 1 ? "" : "s"} in workshop/front.`;
+      }
+    }
+
+    function updateYardMessageUI() {
+      const bar = document.getElementById("yardMessageBar");
+      const textEl = document.getElementById("yardMessageText");
+      if (!bar || !textEl) return;
+
+      const msg = (yardData.globalMessage || "").trim();
+      if (msg) {
+        bar.style.display = "block";
+        textEl.textContent = msg;
+      } else {
+        bar.style.display = "none";
+      }
+    }
+
+    // ======= OVERDUE SCREEN =======
+
+    function getOverdueItems() {
+      let overdue = [];
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        const car = yardData.slots[String(i)];
+        if (!car) continue;
+        if (car.date_in === "11/11/1111") continue; // personal vehicles excluded
+        const days = ageInDays(car.date_in || "");
+        if (days !== null && days > 60) {
+          overdue.push({ slot: i, car, days });
+        }
+      }
+      overdue.sort((a, b) => b.days - a.days);
+      return overdue;
+    }
+
+    function renderOverdueScreen() {
+      const listEl = document.getElementById("overdueListScreen");
+      if (!listEl) return;
+      listEl.innerHTML = "";
+
+      const overdue = getOverdueItems();
+      if (overdue.length === 0) {
+        const span = document.createElement("span");
+        span.textContent = "No bays over 60 days. Nice and tidy!";
+        span.style.color = "#9ca3af";
+        listEl.appendChild(span);
+        return;
+      }
+
+      overdue.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "overdue-item";
+        card.style.cursor = "pointer";
+        card.onclick = () => {
+          showYard();
+          highlightSlots([item.slot]);
+        };
+
+        const main = document.createElement("span");
+        main.textContent = `Bay ${item.slot} – ${item.car.make_model || ""} `;
+
+        const highlight = document.createElement("span");
+        highlight.className = "overdue-highlight";
+        highlight.textContent =
+          `(${item.car.rego || "no rego"}, ${item.days}d)`;
+
+        card.appendChild(main);
+        card.appendChild(highlight);
+
+        const st = item.car.status || "";
+        if (st) {
+          const stSpan = document.createElement("span");
+          stSpan.textContent = ` [${statusLabel(st)}]`;
+          stSpan.style.marginLeft = "4px";
+          stSpan.style.color = "#e5e7eb";
+          card.appendChild(stSpan);
+        }
+
+        listEl.appendChild(card);
+      });
+    }
+
+    // ======= WORKSHOP SCREEN =======
+
+    function renderWorkshopScreen() {
+      const listEl = document.getElementById("workshopList");
+      if (!listEl) return;
+      listEl.innerHTML = "";
+
+      const ws = yardData.workshop || [];
+      if (ws.length === 0) {
+        const span = document.createElement("span");
+        span.textContent = "No vehicles currently in workshop/front.";
+        span.style.color = "#9ca3af";
+        listEl.appendChild(span);
+        return;
+      }
+
+      ws.forEach((item, index) => {
+        const car = item.car || {};
+        const line = document.createElement("div");
+        line.className = "overdue-item";
+
+        const days = car.date_in === "11/11/1111" ? null : ageInDays(car.date_in || "");
+        const lbl = car.date_in === "11/11/1111" ? "PERSONAL VEHICLE" : ageLabel(days);
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent =
+          `From Bay ${item.from_slot || "?"} – ${car.make_model || ""} (${car.rego || "no rego"}) ` +
+          `[Date in: ${car.date_in || "unknown"} / ${lbl}] ` +
+          (item.moved_at ? ` Moved: ${item.moved_at}` : "");
+
+        const btn = document.createElement("button");
+        btn.className = "btn btn-primary";
+        btn.style.marginLeft = "6px";
+        btn.textContent = "Move back to yard";
+        btn.onclick = () => moveBackFromWorkshop(index);
+
+        line.appendChild(textSpan);
+        line.appendChild(btn);
+        listEl.appendChild(line);
+      });
+    }
+
+    // ======= HIGHLIGHT & DIM =======
+
+    function clearHighlightAndDim() {
+      document.querySelectorAll(".slot").forEach(el => {
+        el.classList.remove("slot-highlight");
+        el.classList.remove("slot-dim");
+      });
+    }
+
+    function applyHighlightAndDim(slotsToHighlight) {
+      const allSlots = document.querySelectorAll(".slot");
+      allSlots.forEach(el => {
+        const slotNum = Number(el.dataset.slot);
+        if (slotsToHighlight.includes(slotNum)) {
+          el.classList.add("slot-highlight");
+          el.classList.remove("slot-dim");
+        } else {
+          el.classList.remove("slot-highlight");
+          el.classList.add("slot-dim");
+        }
+      });
+    }
+
+    function highlightSlots(slotsArray) {
+      if (!Array.isArray(slotsArray) || slotsArray.length === 0) return;
+      clearHighlightAndDim();
+      applyHighlightAndDim(slotsArray);
+    }
+
+    // ======= STATUS FILTER =======
+
+    function setStatusFilter(status) {
+      currentStatusFilter = status;
+      const buttons = document.querySelectorAll(".status-filter-btn");
+      buttons.forEach(btn => {
+        const value = btn.getAttribute("data-status");
+        if (value === status) {
+          btn.classList.add("status-filter-active");
+        } else {
+          btn.classList.remove("status-filter-active");
+        }
+      });
+
+      if (status === "all") {
+        clearHighlightAndDim();
+        return;
+      }
+
+      const slots = [];
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        const car = yardData.slots[String(i)];
+        if (car && car.status === status) {
+          slots.push(i);
+        }
+      }
+
+      if (slots.length > 0) {
+        highlightSlots(slots);
+      } else {
+        clearHighlightAndDim();
+      }
+    }
+
+    // ======= MODAL =======
+
+    function openModal(slotNumber) {
+      currentSlot = slotNumber;
+      const car = yardData.slots[String(slotNumber)] || {};
+
+      document.getElementById("vehicleInput").value = car.make_model || "";
+      document.getElementById("regoInput").value = car.rego || "";
+      document.getElementById("roInput").value = car.ro_number || "";
+      document.getElementById("phoneInput").value = car.customer_phone || "";
+      document.getElementById("faultInput").value = car.fault || "";
+      document.getElementById("waitingInput").value = car.waiting_on || "";
+      document.getElementById("statusInput").value = car.status || "";
+      document.getElementById("dateInput").value = car.date_in || todayDDMMYYYY();
+
+      document.getElementById("modalTitle").textContent = `Bay ${slotNumber}`;
+      document.getElementById("modalBackdrop").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").style.display = "none";
+      currentSlot = null;
+    }
+
+    function saveSlot() {
+      if (!currentSlot) return;
+
+      const vehicle = document.getElementById("vehicleInput").value.trim();
+      const rego = document.getElementById("regoInput").value.trim();
+      const ro = document.getElementById("roInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
+      const fault = document.getElementById("faultInput").value.trim();
+      const waiting = document.getElementById("waitingInput").value.trim();
+      const status = document.getElementById("statusInput").value;
+      let dateIn = document.getElementById("dateInput").value.trim();
+
+      if (!vehicle && !rego) {
+        alert("Please enter at least vehicle or rego.");
+        return;
+      }
+
+      if (!dateIn) {
+        dateIn = todayDDMMYYYY();
+      }
+
+      // allow 11/11/1111 as special (personal vehicle), otherwise validate
+      if (dateIn !== "11/11/1111" && !parseDateDDMMYYYY(dateIn)) {
+        alert("Please use date format DD/MM/YYYY.");
+        return;
+      }
+
+      yardData.slots[String(currentSlot)] = {
+        make_model: vehicle,
+        rego,
+        ro_number: ro,
+        customer_phone: phone,
+        fault,
+        waiting_on: waiting,
+        status,
+        date_in: dateIn
+      };
+
+      addNotification(`Bay ${currentSlot} updated (${rego || vehicle || "no id"})`);
+      saveData();
+      updateSlotDisplay(currentSlot);
+      renderOverdueScreen();
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      updateYardMessageUI();
+      closeModal();
+    }
+
+    function clearSlot() {
+      if (!currentSlot) return;
+      const car = yardData.slots[String(currentSlot)];
+      if (!car) {
+        alert("This bay is already empty.");
+        return;
+      }
+      if (!confirm(`Clear bay ${currentSlot}?`)) return;
+
+      addNotification(`Bay ${currentSlot} cleared (${car.rego || car.make_model || "no id"})`);
+      delete yardData.slots[String(currentSlot)];
+      saveData();
+      updateSlotDisplay(currentSlot);
+      renderOverdueScreen();
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      updateYardMessageUI();
+      closeModal();
+    }
+
+    function towOutSlot() {
+      if (!currentSlot) return;
+      const car = yardData.slots[String(currentSlot)];
+      if (!car) {
+        alert("This bay is already empty.");
+        return;
+      }
+      if (!confirm(`Mark bay ${currentSlot} as TOWED OUT and clear it?`)) return;
+
+      addNotification(`Bay ${currentSlot} TOWED OUT (${car.rego || car.make_model || "no id"})`);
+      delete yardData.slots[String(currentSlot)];
+      saveData();
+      updateSlotDisplay(currentSlot);
+      renderOverdueScreen();
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      updateYardMessageUI();
+      closeModal();
+    }
+
+    function moveToWorkshop() {
+      if (!currentSlot) return;
+      const car = yardData.slots[String(currentSlot)];
+      if (!car) {
+        alert("This bay is already empty.");
+        return;
+      }
+      if (!confirm(`Move bay ${currentSlot} to Workshop list?`)) return;
+
+      if (!yardData.workshop) yardData.workshop = [];
+      yardData.workshop.push({
+        from_slot: currentSlot,
+        moved_at: nowStr(),
+        car: { ...car }
+      });
+
+      addNotification(`Bay ${currentSlot} moved to Workshop (${car.rego || car.make_model || "no id"})`);
+      delete yardData.slots[String(currentSlot)];
+      saveData();
+      updateSlotDisplay(currentSlot);
+      renderOverdueScreen();
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      renderWorkshopScreen();
+      updateYardMessageUI();
+      closeModal();
+    }
+
+    function moveBackFromWorkshop(index) {
+      const ws = yardData.workshop || [];
+      const entry = ws[index];
+      if (!entry) return;
+
+      const car = entry.car || {};
+      let target = prompt(
+        `Enter bay number (1–${NUM_SLOTS}) to move this vehicle back to:`,
+        entry.from_slot ? String(entry.from_slot) : ""
+      );
+      if (target === null) return;
+      target = target.trim();
+      const bay = parseInt(target, 10);
+      if (isNaN(bay) || bay < 1 || bay > NUM_SLOTS) {
+        alert("Please enter a valid bay number.");
+        return;
+      }
+      if (yardData.slots[String(bay)]) {
+        alert("That bay is not empty. Choose another bay.");
+        return;
+      }
+
+      yardData.slots[String(bay)] = car;
+      yardData.workshop.splice(index, 1);
+
+      addNotification(`Workshop vehicle moved to Bay ${bay} (${car.rego || car.make_model || "no id"})`);
+      saveData();
+      updateSlotDisplay(bay);
+      renderOverdueScreen();
+      renderNotifications();
+      renderAvailable();
+      renderWorkshopSummary();
+      renderWorkshopScreen();
+      updateYardMessageUI();
+
+      showYard();
+      setTimeout(() => {
+        highlightSlots([bay]);
+      }, 0);
+    }
+
+    // ======= SEARCH (TOP TOOLBAR) =======
+
+    function searchRego() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const resultDiv = document.getElementById("searchResult");
+
+      clearHighlightAndDim();
+
+      if (!query) {
+        resultDiv.textContent = "";
+        return;
+      }
+
+      let matches = [];
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        const car = yardData.slots[String(i)];
+        if (car && car.rego && car.rego.toLowerCase().includes(query)) {
+          matches.push({ slot: i, car });
+        }
+      }
+
+      if (matches.length === 0) {
+        resultDiv.textContent = "No matching vehicles found.";
+      } else {
+        const parts = matches.map(m => {
+          const isPersonal = m.car.date_in === "11/11/1111";
+          const days = isPersonal ? null : ageInDays(m.car.date_in || "");
+          const lbl = isPersonal ? "PERSONAL" : ageLabel(days);
+          return `Bay ${m.slot}: ${m.car.rego} (${lbl})`;
+        });
+        resultDiv.textContent = parts.join(" | ");
+        const slotsToHighlight = matches.map(m => m.slot);
+        applyHighlightAndDim(slotsToHighlight);
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("searchResult").textContent = "";
+      clearHighlightAndDim();
+    }
+
+    // ======= MENU / YARD TOGGLING & ACTIONS =======
+
+    function showYard() {
+      document.getElementById("mainMenu").style.display = "none";
+      document.getElementById("searchScreen").style.display = "none";
+      document.getElementById("appMain").style.display = "block";
+      document.getElementById("yardContent").style.display = "block";
+      document.getElementById("overdueScreen").style.display = "none";
+      document.getElementById("workshopScreen").style.display = "none";
+    }
+
+    function showMenu() {
+      document.getElementById("appMain").style.display = "none";
+      document.getElementById("searchScreen").style.display = "none";
+      document.getElementById("mainMenu").style.display = "block";
+      document.getElementById("overdueScreen").style.display = "none";
+      document.getElementById("workshopScreen").style.display = "none";
+    }
+
+    function menuSearchVehicle() {
+      showSearchScreen();
+    }
+
+    function refreshYardFromMenu() {
+      loadData();
+      updateAllSlots();
+      alert("Yard data reloaded from local storage.");
+    }
+
+    function showNotificationsPopup() {
+      const events = yardData.notifications || [];
+      if (events.length === 0) {
+        alert("No recent events yet.");
+        return;
+      }
+      const text = events.slice(0, 15).join("\n\n");
+      alert("Recent Events:\n\n" + text);
+    }
+
+    function quitApp() {
+      alert("To quit, just close this browser tab or window.");
+    }
+
+    function showOverdueScreen() {
+      document.getElementById("yardContent").style.display = "none";
+      document.getElementById("overdueScreen").style.display = "block";
+      document.getElementById("workshopScreen").style.display = "none";
+      clearHighlightAndDim();
+      renderOverdueScreen();
+    }
+
+    function backToYardFromOverdue() {
+      document.getElementById("overdueScreen").style.display = "none";
+      document.getElementById("yardContent").style.display = "block";
+    }
+
+    function showWorkshopScreen() {
+      document.getElementById("yardContent").style.display = "none";
+      document.getElementById("overdueScreen").style.display = "none";
+      document.getElementById("workshopScreen").style.display = "block";
+      clearHighlightAndDim();
+      renderWorkshopScreen();
+    }
+
+    function backToYardFromWorkshop() {
+      document.getElementById("workshopScreen").style.display = "none";
+      document.getElementById("yardContent").style.display = "block";
+    }
+
+    function menuSetGlobalNote() {
+      const current = yardData.globalMessage || "";
+      const msg = prompt("Enter yard message (leave blank to clear):", current);
+      if (msg === null) return;
+      yardData.globalMessage = msg.trim();
+      addNotification("Yard message updated");
+      saveData();
+      updateYardMessageUI();
+      alert("Yard message saved. It will show on the yard screen.");
+    }
+
+    // ======= SEARCH SCREEN (Menu option 2) =======
+
+    function showSearchScreen() {
+      document.getElementById("mainMenu").style.display = "none";
+      document.getElementById("appMain").style.display = "none";
+      document.getElementById("searchScreen").style.display = "block";
+
+      document.getElementById("searchScreenInput").value = "";
+      document.getElementById("searchScreenResult").textContent = "";
+      document.getElementById("searchScreenYardBtn").style.display = "none";
+      lastSearchSlot = null;
+
+      setTimeout(() => {
+        document.getElementById("searchScreenInput").focus();
+      }, 0);
+    }
+
+    function searchScreenBack() {
+      document.getElementById("searchScreen").style.display = "none";
+      document.getElementById("mainMenu").style.display = "block";
+    }
+
+    function searchScreenDoSearch() {
+      const input = document.getElementById("searchScreenInput");
+      const q = input.value.trim().toLowerCase();
+      const resEl = document.getElementById("searchScreenResult");
+      const yardBtn = document.getElementById("searchScreenYardBtn");
+
+      lastSearchSlot = null;
+      yardBtn.style.display = "none";
+
+      if (!q) {
+        resEl.textContent = "Please enter a rego to search.";
+        return;
+      }
+
+      let matches = [];
+      for (let i = 1; i <= NUM_SLOTS; i++) {
+        const car = yardData.slots[String(i)];
+        if (!car || !car.rego) continue;
+        if (car.rego.toLowerCase().includes(q)) {
+          matches.push({ slot: i, car });
+        }
+      }
+
+      if (matches.length === 0) {
+        resEl.textContent = "No matching vehicles found.";
+        return;
+      }
+
+      const lines = matches.map(m => {
+        const isPersonal = m.car.date_in === "11/11/1111";
+        const days = isPersonal ? null : ageInDays(m.car.date_in || "");
+        const lbl = isPersonal ? "PERSONAL VEHICLE" : ageLabel(days);
+        return `Bay ${m.slot}
+  Vehicle: ${m.car.make_model || "(no description)"}
+  Rego: ${m.car.rego}
+  Date in: ${m.car.date_in || "unknown"}  [${lbl}]`;
+      });
+
+      resEl.textContent = lines.join("\n\n");
+
+      lastSearchSlot = matches[0].slot;
+      yardBtn.style.display = "inline-block";
+    }
+
+    function searchScreenGoToYard() {
+      if (!lastSearchSlot) return;
+      showYard();
+      setTimeout(() => {
+        highlightSlots([lastSearchSlot]);
+        const car = yardData.slots[String(lastSearchSlot)] || {};
+        document.getElementById("searchInput").value = car.rego || "";
+        const isPersonal = car.date_in === "11/11/1111";
+        const days = isPersonal ? null : ageInDays(car.date_in || "");
+        const lbl = isPersonal ? "PERSONAL" : ageLabel(days);
+        document.getElementById("searchResult").textContent =
+          `Bay ${lastSearchSlot}: ${car.rego || ""} (${lbl})`;
+      }, 0);
+    }
+
+    // ======= INIT =======
+
+    loadData();
+    renderSlots();
+  </script>
+</body>
+</html>
